@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SalonModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Customers">
+    <Key>
+      <PropertyRef Name="CustomerID" />
+    </Key>
+    <Property Name="CustomerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FName" Type="nvarchar" MaxLength="150" />
+    <Property Name="LName" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="BirthDay" Type="smalldatetime" />
+    <Property Name="Female" Type="bit" />
+    <Property Name="Notes" Type="text" />
+  </EntityType>
+  <EntityType Name="Steps">
+    <Key>
+      <PropertyRef Name="StepsID" />
+    </Key>
+    <Property Name="StepsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" MaxLength="150" />
+    <Property Name="EstDuration" Type="int" />
+  </EntityType>
+  <EntityType Name="Treatments">
+    <Key>
+      <PropertyRef Name="TreatmentsID" />
+    </Key>
+    <Property Name="TreatmentsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" MaxLength="150" />
+  </EntityType>
+  <EntityType Name="TreatmentsSteps">
+    <Key>
+      <PropertyRef Name="TreatmentsID" />
+      <PropertyRef Name="StepsID" />
+    </Key>
+    <Property Name="TreatmentsID" Type="int" Nullable="false" />
+    <Property Name="StepsID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Visits">
+    <Key>
+      <PropertyRef Name="VisitID" />
+    </Key>
+    <Property Name="VisitID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CustomerID" Type="int" Nullable="false" />
+    <Property Name="VisitDate" Type="smalldatetime" />
+    <Property Name="ActDurationMin" Type="int" />
+    <Property Name="Notes" Type="text" />
+    <Property Name="StylistID" Type="nvarchar" MaxLength="128" />
+  </EntityType>
+  <EntityType Name="VisitsTreatments">
+    <Key>
+      <PropertyRef Name="VisitsID" />
+      <PropertyRef Name="TreatmentsID" />
+      <PropertyRef Name="OrderID" />
+    </Key>
+    <Property Name="VisitsID" Type="int" Nullable="false" />
+    <Property Name="TreatmentsID" Type="int" Nullable="false" />
+    <Property Name="OrderID" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="fk_TreatmentsStepsSteps">
+    <End Role="Steps" Type="Self.Steps" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="TreatmentsSteps" Type="Self.TreatmentsSteps" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Steps">
+        <PropertyRef Name="StepsID" />
+      </Principal>
+      <Dependent Role="TreatmentsSteps">
+        <PropertyRef Name="StepsID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_TreatmentsStepsTreatments">
+    <End Role="Treatments" Type="Self.Treatments" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="TreatmentsSteps" Type="Self.TreatmentsSteps" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Treatments">
+        <PropertyRef Name="TreatmentsID" />
+      </Principal>
+      <Dependent Role="TreatmentsSteps">
+        <PropertyRef Name="TreatmentsID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_VisitsCustomers">
+    <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+    <End Role="Visits" Type="Self.Visits" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customers">
+        <PropertyRef Name="CustomerID" />
+      </Principal>
+      <Dependent Role="Visits">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_VisitsTreatmentsTreatments">
+    <End Role="Treatments" Type="Self.Treatments" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="VisitsTreatments" Type="Self.VisitsTreatments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Treatments">
+        <PropertyRef Name="TreatmentsID" />
+      </Principal>
+      <Dependent Role="VisitsTreatments">
+        <PropertyRef Name="TreatmentsID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_VisitsTreatmentsVisits">
+    <End Role="Visits" Type="Self.Visits" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="VisitsTreatments" Type="Self.VisitsTreatments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Visits">
+        <PropertyRef Name="VisitID" />
+      </Principal>
+      <Dependent Role="VisitsTreatments">
+        <PropertyRef Name="VisitsID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="SalonModelStoreContainer">
+    <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Steps" EntityType="Self.Steps" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Treatments" EntityType="Self.Treatments" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TreatmentsSteps" EntityType="Self.TreatmentsSteps" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Visits" EntityType="Self.Visits" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="VisitsTreatments" EntityType="Self.VisitsTreatments" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="fk_TreatmentsStepsSteps" Association="Self.fk_TreatmentsStepsSteps">
+      <End Role="Steps" EntitySet="Steps" />
+      <End Role="TreatmentsSteps" EntitySet="TreatmentsSteps" />
+    </AssociationSet>
+    <AssociationSet Name="fk_TreatmentsStepsTreatments" Association="Self.fk_TreatmentsStepsTreatments">
+      <End Role="Treatments" EntitySet="Treatments" />
+      <End Role="TreatmentsSteps" EntitySet="TreatmentsSteps" />
+    </AssociationSet>
+    <AssociationSet Name="fk_VisitsCustomers" Association="Self.fk_VisitsCustomers">
+      <End Role="Customers" EntitySet="Customers" />
+      <End Role="Visits" EntitySet="Visits" />
+    </AssociationSet>
+    <AssociationSet Name="fk_VisitsTreatmentsTreatments" Association="Self.fk_VisitsTreatmentsTreatments">
+      <End Role="Treatments" EntitySet="Treatments" />
+      <End Role="VisitsTreatments" EntitySet="VisitsTreatments" />
+    </AssociationSet>
+    <AssociationSet Name="fk_VisitsTreatmentsVisits" Association="Self.fk_VisitsTreatmentsVisits">
+      <End Role="Visits" EntitySet="Visits" />
+      <End Role="VisitsTreatments" EntitySet="VisitsTreatments" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

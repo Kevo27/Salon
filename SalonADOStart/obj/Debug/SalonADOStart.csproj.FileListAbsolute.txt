@@ -1,0 +1,8 @@
+C:\work\SalonADOStart\SalonADOStart\bin\Debug\SalonADOStart.exe.config
+C:\work\SalonADOStart\SalonADOStart\bin\Debug\SalonADOStart.exe
+C:\work\SalonADOStart\SalonADOStart\bin\Debug\SalonADOStart.pdb
+C:\work\SalonADOStart\SalonADOStart\obj\Debug\SalonADOStart.FrmCustomer.resources
+C:\work\SalonADOStart\SalonADOStart\obj\Debug\SalonADOStart.Properties.Resources.resources
+C:\work\SalonADOStart\SalonADOStart\obj\Debug\SalonADOStart.csproj.GenerateResource.Cache
+C:\work\SalonADOStart\SalonADOStart\obj\Debug\SalonADOStart.exe
+C:\work\SalonADOStart\SalonADOStart\obj\Debug\SalonADOStart.pdb

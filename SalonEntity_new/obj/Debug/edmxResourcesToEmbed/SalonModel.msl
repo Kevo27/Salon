@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="SalonModelsStoreContainer" CdmEntityContainer="SalonEntities">
+    <EntitySetMapping Name="Customers">
+      <EntityTypeMapping TypeName="SalonModels.Customer">
+        <MappingFragment StoreEntitySet="Customers">
+          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+          <ScalarProperty Name="FName" ColumnName="FName" />
+          <ScalarProperty Name="LName" ColumnName="LName" />
+          <ScalarProperty Name="BirthDay" ColumnName="BirthDay" />
+          <ScalarProperty Name="Female" ColumnName="Female" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Steps">
+      <EntityTypeMapping TypeName="SalonModels.Step">
+        <MappingFragment StoreEntitySet="Steps">
+          <ScalarProperty Name="StepsID" ColumnName="StepsID" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="EstDuration" ColumnName="EstDuration" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Treatments">
+      <EntityTypeMapping TypeName="SalonModels.Treatment">
+        <MappingFragment StoreEntitySet="Treatments">
+          <ScalarProperty Name="TreatmentsID" ColumnName="TreatmentsID" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Visits">
+      <EntityTypeMapping TypeName="SalonModels.Visit">
+        <MappingFragment StoreEntitySet="Visits">
+          <ScalarProperty Name="VisitID" ColumnName="VisitID" />
+          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+          <ScalarProperty Name="VisitDate" ColumnName="VisitDate" />
+          <ScalarProperty Name="ActDurationMin" ColumnName="ActDurationMin" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="StylistID" ColumnName="StylistID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VisitsTreatments">
+      <EntityTypeMapping TypeName="SalonModels.VisitsTreatment">
+        <MappingFragment StoreEntitySet="VisitsTreatments">
+          <ScalarProperty Name="VisitsID" ColumnName="VisitsID" />
+          <ScalarProperty Name="TreatmentsID" ColumnName="TreatmentsID" />
+          <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="TreatmentsSteps" TypeName="SalonModels.TreatmentsSteps" StoreEntitySet="TreatmentsSteps">
+      <EndProperty Name="Steps">
+        <ScalarProperty Name="StepsID" ColumnName="StepsID" />
+      </EndProperty>
+      <EndProperty Name="Treatments">
+        <ScalarProperty Name="TreatmentsID" ColumnName="TreatmentsID" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

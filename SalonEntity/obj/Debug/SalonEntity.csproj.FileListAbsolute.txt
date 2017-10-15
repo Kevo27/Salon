@@ -1,0 +1,9 @@
+C:\work\SalonADOStart\SalonEntity\bin\Debug\SalonEntity.exe.config
+C:\work\SalonADOStart\SalonEntity\obj\Debug\SalonEntity.Properties.Resources.resources
+C:\work\SalonADOStart\SalonEntity\obj\Debug\SalonEntity.csproj.GenerateResource.Cache
+C:\work\SalonADOStart\SalonEntity\obj\Debug\SalonEntity.FrmCustomer.resources
+C:\work\SalonADOStart\SalonEntity\bin\Debug\SalonEntity.exe
+C:\work\SalonADOStart\SalonEntity\bin\Debug\SalonEntity.pdb
+C:\work\SalonADOStart\SalonEntity\obj\Debug\SalonEntity.exe
+C:\work\SalonADOStart\SalonEntity\obj\Debug\SalonEntity.pdb
+C:\work\SalonADOStart\SalonEntity\obj\Debug\SalonEntity.csprojResolveAssemblyReference.cache

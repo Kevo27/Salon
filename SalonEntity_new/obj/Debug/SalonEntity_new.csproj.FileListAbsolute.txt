@@ -1,0 +1,14 @@
+C:\work\SalonADOStart\SalonEntity_new\bin\Debug\SalonEntity_new.exe.config
+C:\work\SalonADOStart\SalonEntity_new\bin\Debug\SalonEntity_new.exe
+C:\work\SalonADOStart\SalonEntity_new\bin\Debug\SalonEntity_new.pdb
+C:\work\SalonADOStart\SalonEntity_new\bin\Debug\EntityFramework.dll
+C:\work\SalonADOStart\SalonEntity_new\bin\Debug\EntityFramework.SqlServer.dll
+C:\work\SalonADOStart\SalonEntity_new\bin\Debug\EntityFramework.xml
+C:\work\SalonADOStart\SalonEntity_new\bin\Debug\EntityFramework.SqlServer.xml
+C:\work\SalonADOStart\SalonEntity_new\bin\Debug\de\EntityFramework.resources.dll
+C:\work\SalonADOStart\SalonEntity_new\obj\Debug\SalonEntity_new.Form1.resources
+C:\work\SalonADOStart\SalonEntity_new\obj\Debug\SalonEntity_new.Properties.Resources.resources
+C:\work\SalonADOStart\SalonEntity_new\obj\Debug\SalonEntity_new.csproj.GenerateResource.Cache
+C:\work\SalonADOStart\SalonEntity_new\obj\Debug\SalonEntity_new.exe
+C:\work\SalonADOStart\SalonEntity_new\obj\Debug\SalonEntity_new.pdb
+C:\work\SalonADOStart\SalonEntity_new\obj\Debug\SalonEntity_new.csprojResolveAssemblyReference.cache

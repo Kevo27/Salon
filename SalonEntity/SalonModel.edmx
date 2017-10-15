@@ -1,0 +1,373 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="SalonModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Customers">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+          </Key>
+          <Property Name="CustomerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FName" Type="nvarchar" MaxLength="150" />
+          <Property Name="LName" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="BirthDay" Type="smalldatetime" />
+          <Property Name="Female" Type="bit" />
+          <Property Name="Notes" Type="text" />
+        </EntityType>
+        <EntityType Name="Steps">
+          <Key>
+            <PropertyRef Name="StepsID" />
+          </Key>
+          <Property Name="StepsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="150" />
+          <Property Name="EstDuration" Type="int" />
+        </EntityType>
+        <EntityType Name="Treatments">
+          <Key>
+            <PropertyRef Name="TreatmentsID" />
+          </Key>
+          <Property Name="TreatmentsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="TreatmentsSteps">
+          <Key>
+            <PropertyRef Name="TreatmentsID" />
+            <PropertyRef Name="StepsID" />
+          </Key>
+          <Property Name="TreatmentsID" Type="int" Nullable="false" />
+          <Property Name="StepsID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Visits">
+          <Key>
+            <PropertyRef Name="VisitID" />
+          </Key>
+          <Property Name="VisitID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerID" Type="int" Nullable="false" />
+          <Property Name="VisitDate" Type="smalldatetime" />
+          <Property Name="ActDurationMin" Type="int" />
+          <Property Name="Notes" Type="text" />
+          <Property Name="StylistID" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="VisitsTreatments">
+          <Key>
+            <PropertyRef Name="VisitsID" />
+            <PropertyRef Name="TreatmentsID" />
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="VisitsID" Type="int" Nullable="false" />
+          <Property Name="TreatmentsID" Type="int" Nullable="false" />
+          <Property Name="OrderID" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="fk_TreatmentsStepsSteps">
+          <End Role="Steps" Type="Self.Steps" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TreatmentsSteps" Type="Self.TreatmentsSteps" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Steps">
+              <PropertyRef Name="StepsID" />
+            </Principal>
+            <Dependent Role="TreatmentsSteps">
+              <PropertyRef Name="StepsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_TreatmentsStepsTreatments">
+          <End Role="Treatments" Type="Self.Treatments" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TreatmentsSteps" Type="Self.TreatmentsSteps" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Treatments">
+              <PropertyRef Name="TreatmentsID" />
+            </Principal>
+            <Dependent Role="TreatmentsSteps">
+              <PropertyRef Name="TreatmentsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_VisitsCustomers">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+          <End Role="Visits" Type="Self.Visits" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="Visits">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_VisitsTreatmentsTreatments">
+          <End Role="Treatments" Type="Self.Treatments" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="VisitsTreatments" Type="Self.VisitsTreatments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Treatments">
+              <PropertyRef Name="TreatmentsID" />
+            </Principal>
+            <Dependent Role="VisitsTreatments">
+              <PropertyRef Name="TreatmentsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_VisitsTreatmentsVisits">
+          <End Role="Visits" Type="Self.Visits" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="VisitsTreatments" Type="Self.VisitsTreatments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Visits">
+              <PropertyRef Name="VisitID" />
+            </Principal>
+            <Dependent Role="VisitsTreatments">
+              <PropertyRef Name="VisitsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SalonModelStoreContainer">
+          <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Steps" EntityType="Self.Steps" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Treatments" EntityType="Self.Treatments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TreatmentsSteps" EntityType="Self.TreatmentsSteps" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Visits" EntityType="Self.Visits" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VisitsTreatments" EntityType="Self.VisitsTreatments" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_TreatmentsStepsSteps" Association="Self.fk_TreatmentsStepsSteps">
+            <End Role="Steps" EntitySet="Steps" />
+            <End Role="TreatmentsSteps" EntitySet="TreatmentsSteps" />
+          </AssociationSet>
+          <AssociationSet Name="fk_TreatmentsStepsTreatments" Association="Self.fk_TreatmentsStepsTreatments">
+            <End Role="Treatments" EntitySet="Treatments" />
+            <End Role="TreatmentsSteps" EntitySet="TreatmentsSteps" />
+          </AssociationSet>
+          <AssociationSet Name="fk_VisitsCustomers" Association="Self.fk_VisitsCustomers">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Visits" EntitySet="Visits" />
+          </AssociationSet>
+          <AssociationSet Name="fk_VisitsTreatmentsTreatments" Association="Self.fk_VisitsTreatmentsTreatments">
+            <End Role="Treatments" EntitySet="Treatments" />
+            <End Role="VisitsTreatments" EntitySet="VisitsTreatments" />
+          </AssociationSet>
+          <AssociationSet Name="fk_VisitsTreatmentsVisits" Association="Self.fk_VisitsTreatmentsVisits">
+            <End Role="Visits" EntitySet="Visits" />
+            <End Role="VisitsTreatments" EntitySet="VisitsTreatments" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SalonModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+          </Key>
+          <Property Name="CustomerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="LName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="BirthDay" Type="DateTime" Precision="0" />
+          <Property Name="Female" Type="Boolean" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Visits" Relationship="Self.fk_VisitsCustomers" FromRole="Customers" ToRole="Visits" />
+        </EntityType>
+        <EntityType Name="Step">
+          <Key>
+            <PropertyRef Name="StepsID" />
+          </Key>
+          <Property Name="StepsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="EstDuration" Type="Int32" />
+          <NavigationProperty Name="Treatments" Relationship="Self.TreatmentsSteps" FromRole="Steps" ToRole="Treatments" />
+        </EntityType>
+        <EntityType Name="Treatment">
+          <Key>
+            <PropertyRef Name="TreatmentsID" />
+          </Key>
+          <Property Name="TreatmentsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="VisitsTreatments" Relationship="Self.fk_VisitsTreatmentsTreatments" FromRole="Treatments" ToRole="VisitsTreatments" />
+          <NavigationProperty Name="Steps" Relationship="Self.TreatmentsSteps" FromRole="Treatments" ToRole="Steps" />
+        </EntityType>
+        <EntityType Name="Visit">
+          <Key>
+            <PropertyRef Name="VisitID" />
+          </Key>
+          <Property Name="VisitID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerID" Type="Int32" Nullable="false" />
+          <Property Name="VisitDate" Type="DateTime" Precision="0" />
+          <Property Name="ActDurationMin" Type="Int32" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="StylistID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Customer" Relationship="Self.fk_VisitsCustomers" FromRole="Visits" ToRole="Customers" />
+          <NavigationProperty Name="VisitsTreatments" Relationship="Self.fk_VisitsTreatmentsVisits" FromRole="Visits" ToRole="VisitsTreatments" />
+        </EntityType>
+        <EntityType Name="VisitsTreatment">
+          <Key>
+            <PropertyRef Name="VisitsID" />
+            <PropertyRef Name="TreatmentsID" />
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="VisitsID" Type="Int32" Nullable="false" />
+          <Property Name="TreatmentsID" Type="Int32" Nullable="false" />
+          <Property Name="OrderID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Treatment" Relationship="Self.fk_VisitsTreatmentsTreatments" FromRole="VisitsTreatments" ToRole="Treatments" />
+          <NavigationProperty Name="Visit" Relationship="Self.fk_VisitsTreatmentsVisits" FromRole="VisitsTreatments" ToRole="Visits" />
+        </EntityType>
+        <Association Name="fk_VisitsCustomers">
+          <End Role="Customers" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Visits" Type="Self.Visit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="Visits">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_VisitsTreatmentsTreatments">
+          <End Role="Treatments" Type="Self.Treatment" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="VisitsTreatments" Type="Self.VisitsTreatment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Treatments">
+              <PropertyRef Name="TreatmentsID" />
+            </Principal>
+            <Dependent Role="VisitsTreatments">
+              <PropertyRef Name="TreatmentsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_VisitsTreatmentsVisits">
+          <End Role="Visits" Type="Self.Visit" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="VisitsTreatments" Type="Self.VisitsTreatment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Visits">
+              <PropertyRef Name="VisitID" />
+            </Principal>
+            <Dependent Role="VisitsTreatments">
+              <PropertyRef Name="VisitsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TreatmentsSteps">
+          <End Role="Steps" Type="Self.Step" Multiplicity="*" />
+          <End Role="Treatments" Type="Self.Treatment" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="SalonEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Customers" EntityType="Self.Customer" />
+          <EntitySet Name="Steps" EntityType="Self.Step" />
+          <EntitySet Name="Treatments" EntityType="Self.Treatment" />
+          <EntitySet Name="Visits" EntityType="Self.Visit" />
+          <EntitySet Name="VisitsTreatments" EntityType="Self.VisitsTreatment" />
+          <AssociationSet Name="fk_VisitsCustomers" Association="Self.fk_VisitsCustomers">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Visits" EntitySet="Visits" />
+          </AssociationSet>
+          <AssociationSet Name="fk_VisitsTreatmentsTreatments" Association="Self.fk_VisitsTreatmentsTreatments">
+            <End Role="Treatments" EntitySet="Treatments" />
+            <End Role="VisitsTreatments" EntitySet="VisitsTreatments" />
+          </AssociationSet>
+          <AssociationSet Name="fk_VisitsTreatmentsVisits" Association="Self.fk_VisitsTreatmentsVisits">
+            <End Role="Visits" EntitySet="Visits" />
+            <End Role="VisitsTreatments" EntitySet="VisitsTreatments" />
+          </AssociationSet>
+          <AssociationSet Name="TreatmentsSteps" Association="Self.TreatmentsSteps">
+            <End Role="Steps" EntitySet="Steps" />
+            <End Role="Treatments" EntitySet="Treatments" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SalonModelStoreContainer" CdmEntityContainer="SalonEntities">
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="SalonModel.Customer">
+              <MappingFragment StoreEntitySet="Customers">
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="FName" ColumnName="FName" />
+                <ScalarProperty Name="LName" ColumnName="LName" />
+                <ScalarProperty Name="BirthDay" ColumnName="BirthDay" />
+                <ScalarProperty Name="Female" ColumnName="Female" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Steps">
+            <EntityTypeMapping TypeName="SalonModel.Step">
+              <MappingFragment StoreEntitySet="Steps">
+                <ScalarProperty Name="StepsID" ColumnName="StepsID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="EstDuration" ColumnName="EstDuration" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Treatments">
+            <EntityTypeMapping TypeName="SalonModel.Treatment">
+              <MappingFragment StoreEntitySet="Treatments">
+                <ScalarProperty Name="TreatmentsID" ColumnName="TreatmentsID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Visits">
+            <EntityTypeMapping TypeName="SalonModel.Visit">
+              <MappingFragment StoreEntitySet="Visits">
+                <ScalarProperty Name="VisitID" ColumnName="VisitID" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="VisitDate" ColumnName="VisitDate" />
+                <ScalarProperty Name="ActDurationMin" ColumnName="ActDurationMin" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="StylistID" ColumnName="StylistID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VisitsTreatments">
+            <EntityTypeMapping TypeName="SalonModel.VisitsTreatment">
+              <MappingFragment StoreEntitySet="VisitsTreatments">
+                <ScalarProperty Name="VisitsID" ColumnName="VisitsID" />
+                <ScalarProperty Name="TreatmentsID" ColumnName="TreatmentsID" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="TreatmentsSteps" TypeName="SalonModel.TreatmentsSteps" StoreEntitySet="TreatmentsSteps">
+            <EndProperty Name="Steps">
+              <ScalarProperty Name="StepsID" ColumnName="StepsID" />
+            </EndProperty>
+            <EndProperty Name="Treatments">
+              <ScalarProperty Name="TreatmentsID" ColumnName="TreatmentsID" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Kein" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
