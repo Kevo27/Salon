@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.ComponentModel.DataAnnotations;
 
 namespace SalonEntity
 {
@@ -65,18 +66,26 @@ namespace SalonEntity
         {
             Customer newCustomer = new Customer();
             
-            if(txtBlastname.Text.ToString() == "" || txtBlastname.Text.ToString() == null || txtBsurename.Text.ToString() == "" || txtBsurename.Text.ToString() == null)
-            {
-                MessageBox.Show("Please check your input!");
-            };
+            //if(txtBlastname.Text.ToString() == "" || txtBlastname.Text.ToString() == null || txtBsurename.Text.ToString() == "" || txtBsurename.Text.ToString() == null)
+            //{
+            //    MessageBox.Show("Please check your input!");
+            //    return;
+            //};
 
             newCustomer.FName = txtBsurename.Text;
             newCustomer.LName = txtBlastname.Text;
-
+           
             this._dbcontext.Customers.Add(newCustomer);
 
-            this._dbcontext.SaveChanges();
-
+            try
+            {
+                this._dbcontext.SaveChanges();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(String.Format("Error: {0}", ex));
+            }
+            
             this.txtBsurename.Text = "";
             this.txtBlastname.Text = "";
 

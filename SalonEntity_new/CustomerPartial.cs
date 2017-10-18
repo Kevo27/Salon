@@ -19,10 +19,12 @@ namespace SalonEntity_new
     /// </summary>
         public class CustomerMetadata
         {
-            [Required]
+            [Required(ErrorMessage ="Lastname is required!")]
+            [StringLength(150, ErrorMessage = "The Lastname must be between 1 and 50 characters!",MinimumLength = 1)]
             public string LName { get; set; }
-
-            [Required]
+        
+            [Required(ErrorMessage = "Firstname is required!")]
+            [StringLength(150, ErrorMessage = "The Firstname must be between 1 and 50 characters!", MinimumLength = 1)]
             public string FName { get; set; }
         }    
 }
