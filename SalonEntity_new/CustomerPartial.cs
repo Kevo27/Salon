@@ -8,17 +8,21 @@ using System.Threading.Tasks;
 namespace SalonEntity_new
 {
 
-    [MetadataType(typeof(Customer))]
+    [MetadataType(typeof(CustomerMetadata))]
     public partial class Customer
     {
         public string FullName { get { return this.FName + " " + this.LName; } }
     }
 
-    public partial class Customer
-    {
+    /// <summary>
+    /// Metadata
+    /// </summary>
         public class CustomerMetadata
         {
-            
-        }
-    }
+            [Required]
+            public string LName { get; set; }
+
+            [Required]
+            public string FName { get; set; }
+        }    
 }
